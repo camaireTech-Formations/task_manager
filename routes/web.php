@@ -65,6 +65,10 @@ Route::get('/ui/typography', $controller_path . '\user_interface\Typography@inde
 Route::get('/extended/ui-perfect-scrollbar', $controller_path . '\extended_ui\PerfectScrollbar@index')->name('extended-ui-perfect-scrollbar');
 Route::get('/extended/ui-text-divider', $controller_path . '\extended_ui\TextDivider@index')->name('extended-ui-text-divider');
 
+//tasks
+Route::get('/tasks', $controller_path . '\task\Task@index')->name('tasks');
+
+
 // icons
 Route::get('/icons/boxicons', $controller_path . '\icons\Boxicons@index')->name('icons-boxicons');
 

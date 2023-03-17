@@ -40,6 +40,36 @@
       ]
     },
     {
+      "menuHeader": "Tasks"
+    },
+    {
+      "name": "TASKS",
+      "icon": "menu-icon tf-icons bx bx-copy",
+      "slug": "task",
+      "submenu": [
+        {
+          "url": "tasks",
+          "name": "New Tasks",
+          "slug": "task-new-tasks"
+        },
+        {
+          "url": "tasks",
+          "name": "Pending Tasks",
+          "slug": "task-pending-tasks"
+        },
+        {
+          "url": "tasks",
+          "name": "Finished Tasks",
+          "slug": "task-finished-tasks"
+        },
+        {
+          "url": "tasks",
+          "name": "Statistiques",
+          "slug": "task-statistiques"
+        }
+      ]
+    },
+    {
       "menuHeader": "Pages"
     },
     {
