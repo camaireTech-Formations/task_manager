@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('statut', [1,2,3])->default(1);
             $table->enum('favoris', [0,1])->default(0);
             $table->enum('statut_corbeille', [0,1])->default(0);
+            $table->integer('parent_id')->default(0);
             $table->timestamps();
         });
     }
