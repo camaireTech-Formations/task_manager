@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('task_name');
             $table->longText('details');
-            $table->enum('statut', [1,2,3])->default(1);
+            $table->enum('statut', [1,2,3]);
             $table->enum('favoris', [0,1])->default(0);
             $table->enum('statut_corbeille', [0,1])->default(0);
             $table->integer('parent_id')->default(0);
-            $table->foreignId('tasks_list_id')->constrained('tasks_lists')->onDelete('cascade');
+            $table->foreignId('tasks_list_id')->references('id')->on('tasks_lists')->onDelete('cascade');
             $table->timestamps();
         });
     }

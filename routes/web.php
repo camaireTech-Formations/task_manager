@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\task\Task;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,7 +67,16 @@ Route::get('/extended/ui-perfect-scrollbar', $controller_path . '\extended_ui\Pe
 Route::get('/extended/ui-text-divider', $controller_path . '\extended_ui\TextDivider@index')->name('extended-ui-text-divider');
 
 //tasks
+Route::get('/tasks', $controller_path . '\task\Task@index1')->name('tasks');
 Route::get('/tasks', $controller_path . '\task\Task@index')->name('tasks');
+Route::put('/tasks/{id}', $controller_path . '\task\Task@update')->name('tasks.update');
+Route::put('/tasks/{id}/update-favorite', [TaskController::class, 'updateFavorite']);
+Route::delete('/tasks/{id}', [Task::class, 'destroy'])->name('tasks.destroy');
+Route::post('/tasks', [Task::class, 'store'])->name('tasks.store');
+
+
+
+
 
 
 // icons

@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
-    protected $fillable = ['name' , 'tasks_list_id' , 'details'];
+    protected $fillable = ['task_name' , 'details' , 'tasks_list_id'];
 
     public function taksList()
     {
-        return $this->belongsTo(TaskList::class);
+        return $this->belongsTo(TasksList::class);
     }
 }
