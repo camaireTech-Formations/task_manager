@@ -14,12 +14,17 @@ class Task extends Controller
     return view('content.tasks.tasks');
   }
 
-  public function newpage (){
-    return view('content.tasks.tasksUpdate');
+  public function pendingTask()
+  {
+   
+    $tasks = ModelsTask::all();
+    if ($tasks->isEmpty()) {
+        return view('content.tasks.pending', ['tasks' => null , 'layout'=>'pending']);
+    }
+    return view('content.tasks.pending', ['tasks' => $tasks , 'layout'=>'pending']); }
 
-  }
 
-  public function index()
+    public function index()
     {
         $tasks = ModelsTask::where('statut_corbeille', '=', 1)->paginate(5);
         if ($tasks->isEmpty()) {
@@ -143,23 +148,25 @@ class Task extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateFavorite(Request $request, $id)
+    public function updateFavorite(Request $request , $id)
     {
-        $task = ModelsTask::findOrFail($id);
-    
-        // Valider la valeur du champ "favoris" reçue en paramètre
-        $validatedData = $request->validate([
-            'favoris' => 'required|in:0,1'
-        ]);
-    
-        // Mettre à jour la tâche
-        $task->update([
-            'favoris' => $validatedData['favoris']
-        ]);
-    
+        $task = ModelsTask::find($id);
+    if (is_null($task)) {
         return response()->json([
-            'message' => 'Favorite updated successfully.'
-        ]);
+            'message' => 'Task not found'
+        ],404);
+    }
+
+    if ($task->favoris == '1') {
+        $task->favoris = '0';
+    } else {
+        $task->favoris = '1';
+    }
+
+    $task->save();
+
+    return response()->json($task);
+
     }
 
     /**

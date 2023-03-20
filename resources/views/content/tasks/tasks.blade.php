@@ -15,6 +15,7 @@
 <!-- Grid Card -->
 <div class="card">
   <h5 class="card-header">Task List</h5>
+  
   @if($tasks)
     <div class="table-responsive text-nowrap">
       <table class="table table-striped">
@@ -47,11 +48,20 @@
         </td>
         <td>
             <span class="favorite">
-                <!-- Icône de favori vide -->
+                {{--  <!-- Icône de favori vide -->  --}}
                 @if ($task->favoris == 0)
-                    <i class="fa fa-heart-o clickable" onclick="toggleHeart();" data-task-id="{{ $task->id }}"></i>
+                  <form action="{{ route('tasks.updateFavorite', $task->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit"><i class="fa fa-heart-o" onclick="toggleHeart();" clickable></i></button>
+                  </form>  
                 @else
-                    <i class="fa fa-heart clickable" onclick="toggleHeart();" data-task-id="{{ $task->id }}"></i>
+                  <form action="{{ route('tasks.updateFavorite', $task->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button  type="submit"><i onclick="toggleHeart();" class="fa fa-heart clickable"></i>
+                    </button>
+                  </form>  
                 @endif
             </span>
         </td>        
@@ -63,7 +73,7 @@
                     <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
                       @csrf
                       @method('DELETE')
-                        <button type="submit" class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button>
+                        <button type="submit" class="dropdown-item "><i class="bx bx-trash me-1"></i> Delete</button>
                     </form>
                 </div>
             </div>
@@ -90,9 +100,9 @@
           <h5 class="mb-0">Update Task</h5> <small class="text-muted float-end">Default Update</small>
         </div>
         <div class="card-body">           
-          <form action="{{ route('tasks.update', '1') }}" id="update-form" method="post">
+           <form  {{-- action="{{ route('tasks.update', '1') }}" --}} id="update-form" method="post">  
             @csrf    
-            @method('put'); 
+            @method('put')
             <input type="hidden" name="update_id" id="update_id">  
             <div class="mb-3">
               <label class="form-label" for="basic-default-fullname">task Name</label>
@@ -159,7 +169,7 @@
   
 
     function toggleHeart() {
-      /*const clickableHearts = document.querySelectorAll('.clickable');
+      const clickableHearts = document.querySelectorAll('.clickable');
       
       for(let i = 0; i < clickableHearts.length; i++) {
         clickableHearts[i].addEventListener('click', function() {
@@ -171,38 +181,7 @@
             clickableHearts[i].setAttribute('class', 'fa fa-heart-o clickable');
           }
         });
-      }*/
-      $('.clickable').click(function() {
-        // ID de la tâche correspondante
-        var taskId = $(this).data('task-id');
-
-        // Nouvelle valeur de favori
-        var newFavorite = 0;
-        if ($(this).hasClass('fa-heart-o')) {
-            newFavorite = 1;
-        }
-
-        // Requête AJAX pour mettre à jour la tâche
-        $.ajax({
-            url: '/tasks/' + taskId + '/update-favorite',
-            type: 'PUT',
-            data: { 'favoris': newFavorite },
-            success: function(response) {
-                // Mettre à jour l'icône de favori dans la vue
-                if (newFavorite == 1) {
-                    $('.favorite i').removeClass('fa-heart-o').addClass('fa-heart');
-                    console.log('jytyrdyg');
-                } else {
-                    $('.favorite i').removeClass('fa-heart').addClass('fa-heart-o');
-                    console.log('58451487458458745');
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText);
-            }
-        });
-    });
-    }
-    
+      }
+    }  
   </script>
 @endsection

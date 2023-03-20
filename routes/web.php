@@ -69,8 +69,9 @@ Route::get('/extended/ui-text-divider', $controller_path . '\extended_ui\TextDiv
 //tasks
 Route::get('/tasks', $controller_path . '\task\Task@index1')->name('tasks');
 Route::get('/tasks', $controller_path . '\task\Task@index')->name('tasks');
+Route::get('/tasks/pending',  $controller_path . '\task\Task@pendingTask')->name('tasks/pending');
 Route::put('/tasks/{id}', $controller_path . '\task\Task@update')->name('tasks.update');
-Route::put('/tasks/{id}/update-favorite', [TaskController::class, 'updateFavorite']);
+Route::put('/tasks/{id}', $controller_path . '\task\Task@updateFavorite')->name('tasks.updateFavorite');
 Route::delete('/tasks/{id}', [Task::class, 'destroy'])->name('tasks.destroy');
 Route::post('/tasks', [Task::class, 'store'])->name('tasks.store');
 

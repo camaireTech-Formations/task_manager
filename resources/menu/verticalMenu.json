@@ -53,7 +53,7 @@
           "slug": "task-new-tasks"
         },
         {
-          "url": "tasks",
+          "url": "/tasks/pending",
           "name": "Pending Tasks",
           "slug": "task-pending-tasks"
         },
