@@ -10,8 +10,8 @@ class Task extends Model
     use HasFactory;
     protected $fillable = ['task_name' , 'details' , 'tasks_list_id'];
 
-    public function taksList()
-    {
-        return $this->belongsTo(TasksList::class);
-    }
+    public function tasksList()
+{
+    return $this->belongsTo(TasksList::class);
+}
 }

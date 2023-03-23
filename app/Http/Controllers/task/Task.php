@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\task;
 
 use App\Http\Controllers\Controller;
-use App\Models\Task as ModelsTask;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Task as ModelsTask;
 
 class Task extends Controller
 {
@@ -13,6 +14,21 @@ class Task extends Controller
   {
     return view('content.tasks.tasks');
   }
+
+  public function stat(){
+    $countStatus1 = DB::table('tasks')->where('statut', 1)->count();
+    $countStatus2 = DB::table('tasks')->where('statut', 2)->count();
+    $countStatus3 = DB::table('tasks')->where('statut', 3)->count();
+    $countStatus4 = DB::table('tasks')->where('favoris', 1)->count();
+    
+
+    return view('content.tasks.statistiques', [
+        'countStatus1' => $countStatus1,
+        'countStatus2' => $countStatus2,
+        'countStatus3' => $countStatus3,
+        'countStatus4' => $countStatus4,
+        
+    ]); }
 
   public function pendingTask()
   {
@@ -24,13 +40,36 @@ class Task extends Controller
     return view('content.tasks.pending', ['tasks' => $tasks , 'layout'=>'pending']); }
 
 
+    public function finishedTask()
+  {
+   
+    $tasks = ModelsTask::all();
+    if ($tasks->isEmpty()) {
+        return view('content.tasks.finished', ['tasks' => null , 'layout'=>'pending']);
+    }
+    return view('content.tasks.finished', ['tasks' => $tasks , 'layout'=>'pending']); }
+
+
     public function index()
-    {
-        $tasks = ModelsTask::where('statut_corbeille', '=', 1)->paginate(5);
-        if ($tasks->isEmpty()) {
-            return view('content.tasks.tasks', ['tasks' => null , 'layout'=>'index']);
-        }
-        return view('content.tasks.tasks', ['tasks' => $tasks , 'layout'=>'index']);
+{
+    $tasks = ModelsTask::where('statut_corbeille', '=', 1)->orderBy('id', 'DESC')->paginate(5);
+    if ($tasks->isEmpty()) {
+        return view('content.tasks.tasks', ['tasks' => null , 'layout'=>'index']);
+    }
+    return view('content.tasks.tasks', ['tasks' => $tasks , 'layout'=>'index']);
+}
+
+
+    public function getAsc(){
+        $tasks = ModelsTask::where('statut_corbeille', '=', 1)->orderBy('created_at', 'asc')->paginate(5);
+
+        return view('content.tasks.pending', ['tasks' => $tasks , 'layout'=>'index']);
+    }
+
+    public function getDesc(){
+        $tasks = ModelsTask::where('statut_corbeille', '=', 1)->orderBy('created_at', 'desc')->paginate(5);
+
+        return view('content.tasks.pending', ['tasks' => $tasks , 'layout'=>'index']);
     }
 
     /**
@@ -60,9 +99,7 @@ class Task extends Controller
 
         $categorie = ModelsTask::create($request->all());
 
-        return response()->json(
-            $categorie
-        ,201);
+        return back();
     }
 
     /**
@@ -137,7 +174,7 @@ class Task extends Controller
             $task->save();
         }
     
-        return response()->json($task);
+        return back();
     }
     
 
@@ -150,7 +187,7 @@ class Task extends Controller
      */
     public function updateFavorite(Request $request , $id)
     {
-        $task = ModelsTask::find($id);
+        $task = ModelsTask::findOrFail($id);
     if (is_null($task)) {
         return response()->json([
             'message' => 'Task not found'
@@ -165,8 +202,7 @@ class Task extends Controller
 
     $task->save();
 
-    return response()->json($task);
-
+    return back();
     }
 
     /**
@@ -185,9 +221,7 @@ class Task extends Controller
         }
         $copiecategorie = $task;
         $task->delete();
-        return response()->json(
-           $copiecategorie
-        );
+        return back();
      
         // echo '<script>alert("La suppression a été effectuée avec succès !");</script>';
         

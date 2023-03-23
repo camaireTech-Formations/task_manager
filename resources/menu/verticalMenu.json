@@ -58,14 +58,19 @@
           "slug": "task-pending-tasks"
         },
         {
-          "url": "tasks",
+          "url": "/tasks/finished",
           "name": "Finished Tasks",
           "slug": "task-finished-tasks"
         },
         {
-          "url": "tasks",
+          "url": "/tasks/statistiques",
           "name": "Statistiques",
           "slug": "task-statistiques"
+        },
+        {
+          "url": "/tasks/listview",
+          "name": "Listview",
+          "slug": "task-listview"
         }
       ]
     },

@@ -18,8 +18,8 @@
                             <button class="btn p-0 dropdown-toggle hide-arrow" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="{{route('tasks/pending', ['sort' => 'asc']) }}">Date croissante</a></li>
-                                <li><a class="dropdown-item" href="{{route('tasks/pending', ['sort' => 'desc']) }}">Date décroissante</a></li>
+                                <li><a class="dropdown-item">Date croissante</a></li>
+                                <li><a class="dropdown-item">Date décroissante</a></li>
                             </ul>
                         </div>
                     </div>

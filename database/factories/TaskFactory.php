@@ -19,7 +19,7 @@ class TaskFactory extends Factory
         return [
             'task_name' => $this->faker->sentence(3),
             'details' => $this->faker->paragraph(),
-            'tasks_list_id' => random_int(1,10),
+            'tasks_list_id' => random_int(1,5),
             'statut' => $this->faker->randomElement([1,2,3]),
         ];
     }

@@ -48,21 +48,13 @@
         </td>
         <td>
             <span class="favorite">
-                {{--  <!-- Icône de favori vide -->  --}}
-                @if ($task->favoris == 0)
-                  <form action="{{ route('tasks.updateFavorite', $task->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit"><i class="fa fa-heart-o" onclick="toggleHeart();" clickable></i></button>
-                  </form>  
-                @else
-                  <form action="{{ route('tasks.updateFavorite', $task->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <button  type="submit"><i onclick="toggleHeart();" class="fa fa-heart clickable"></i>
-                    </button>
-                  </form>  
-                @endif
+                <form action="{{route('tasks.updateFavorite', $task->id) }}" method="post">
+                  @csrf
+                  @method('PUT')
+                  <button type="submit">
+                      <i class="fa fa-heart{{ $task->favoris ? '' : '-o' }}" onclick="toggleHeart();" clickable></i>
+                  </button>
+                </form>                
             </span>
         </td>        
         <td>
@@ -79,7 +71,7 @@
             </div>
         </td>
     </tr>
-@endforeach
+  @endforeach
       </table>
     </div>
     <div class="d-flex justify-content-center mt-5 ">
@@ -88,10 +80,8 @@
     @else
       <p>Aucune tache</p>
     @endif  
+
 </div>
-
-
-{{--  <h3 class="card-title">Add Task</h3>  --}}
 
   <div class="row mt-5">
     <div class="col-xl d-none" id="update" >
@@ -100,9 +90,9 @@
           <h5 class="mb-0">Update Task</h5> <small class="text-muted float-end">Default Update</small>
         </div>
         <div class="card-body">           
-           <form  {{-- action="{{ route('tasks.update', '1') }}" --}} id="update-form" method="post">  
+           <form  action={{-- "route('tasks.update','1')" --}} id="update-form" method="post">  
             @csrf    
-            @method('put')
+            @method('PUT')
             <input type="hidden" name="update_id" id="update_id">  
             <div class="mb-3">
               <label class="form-label" for="basic-default-fullname">task Name</label>
@@ -128,8 +118,6 @@
         </div>
       </div>
     </div>
-
-
     <div class="col-xl">
       <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -155,7 +143,6 @@
       </div>
     </div>
   </div>
-
   <script>
 
     function display(task) {
