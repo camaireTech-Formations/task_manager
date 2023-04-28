@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\task\Task;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\task\TasksList;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +68,24 @@ Route::get('/extended/ui-perfect-scrollbar', $controller_path . '\extended_ui\Pe
 Route::get('/extended/ui-text-divider', $controller_path . '\extended_ui\TextDivider@index')->name('extended-ui-text-divider');
 
 //tasks
+Route::get('/tasks', $controller_path . '\task\Task@index1')->name('tasks');
 Route::get('/tasks', $controller_path . '\task\Task@index')->name('tasks');
+Route::get('/tasks/listview',  $controller_path . '\task\TasksList@taskslist')->name('tasks/listview');
+Route::get('/tasks/listview',  $controller_path . '\task\TasksList@taskslist')->name('tasks/listview');
+// Route::get('/tasks/listview',  $controller_path . '\task\TasksList@listTasks')->name('tasks/listview');
+Route::put('/tasks/{id}',$controller_path .'\task\Task@updateFavorite')->name('tasks.updateFavorite');
+// Route::put('/tasks/{id}', $controller_path . '\task\Task@update')->name('tasks.update');
+Route::delete('/tasks/{id}', [Task::class, 'destroy'])->name('tasks.destroy');
+Route::post('/tasks', [Task::class, 'store'])->name('tasks.store');
+Route::get('/tasks/{task}/edit', [Task::class, 'edit'])->name('tasks.edit');
+Route::delete('/tasks/{id}', [Task::class, 'destroy'])->name('tasks.destroy');
+Route::get('/tasks/pending',  $controller_path . '\task\Task@pendingTask')->name('tasks/pending');
+Route::get('/tasks/finished',  $controller_path . '\task\Task@finishedTask')->name('tasks/finished');
+Route::get('/tasks/statistiques',  $controller_path . '\task\Task@stat')->name('tasks/statistiques');
+
+
+
+
 
 
 // icons
